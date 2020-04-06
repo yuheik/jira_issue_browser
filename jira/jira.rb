@@ -235,7 +235,7 @@ class Array
       when :key
         issueL.key <=> issueR.key
       when :assignee
-        issueL.assignee <=> issueR.assignee
+        compare_nullables(issueL.assignee, issueR.assignee)
       when :status
         issueL.status <=> issueR.status
       when :epic
