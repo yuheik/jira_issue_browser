@@ -13,7 +13,7 @@ class RoadmapActions < BaseActions
   end
 
   def self.get_issues_linked_with_epic
-    return JiraApiCaller.new.search("project = #{Team::Project} AND status not in (Accepted, Completed, Done, Closed) AND \"Epic Link\" != EMPTY")
+    return JiraApiCaller.new.search("project = #{Team::Project} AND status not in (Done) AND \"Epic Link\" != EMPTY")
   end
 
   def self.list

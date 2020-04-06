@@ -4,6 +4,7 @@ require './my_utils'
 include MyUtils
 
 module Jira
+  # TODO IssueType definition depends on the Site
   Types = [
     "Epic",
     "Story",
@@ -151,20 +152,21 @@ module Jira
       @type == 'Question'
     end
 
+    # TODO status definition depends on the Site
     def done?
       case (@type)
       when "Epic"
-        @status == "Closed"    || @status == "Completed"
+        @status == "Done"
       when "Story"
-        @status == "Completed" || @status == "Accepted"
+        @status == "Done"
       when "Sub-task"
         @status == "Done"
       when "Bug"
-        @status == "Closed"    || @status == "Resolved"
+        @status == "Done"
       when "Spike"
-        @status == "Closed"    || @status == "Completed"
+        @status == "Done"
       when "Question"
-        @status == "Closed"    || @status == "Completed"
+        @status == "Done"
       else
         abort "unexpected type #{@type} status: #{@status}"
       end
