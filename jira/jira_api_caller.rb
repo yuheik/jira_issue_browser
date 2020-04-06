@@ -16,13 +16,8 @@ class JiraApiCaller < ApiCaller
 
   def call(url, silent = false)
     body = super("#{JIRA_URL}/#{url}", AccessInfo::Email, AccessInfo::Pass, silent)
-
-    # json = JSON.parse(res.body, symoblize_names: false).ai(index: true,
-    #                                                        plain: true,
-    #                                                        indent: 4,
-    #                                                        ruby19_syntax: false)
-
     # puts body # dump this to create raw json
+    # abort
 
     json = JSON.parse(body)
     return json

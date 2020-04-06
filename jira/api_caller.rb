@@ -1,7 +1,6 @@
 #! /usr/bin/ruby
 # coding: utf-8
 
-require 'ap'
 require 'net/https'
 require 'uri'
 require 'benchmark'
