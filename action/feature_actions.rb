@@ -18,15 +18,8 @@ class FeatureActions < BaseActions
   end
 
   def self.get_epics_and_its_issues
-    # TODO epic / sub-epic structure depends on team or organization
-    @epics = JiraApiCaller.new.search(JiraApiCaller.build_query({ :project  => Team::TG::Project,
-                                                                  :assignee => Team::TG::Lead }))
-
-    sub_epics = JiraApiCaller.new
-                  .search(JiraApiCaller.build_query({ :project     => Team::Project,
-                                                      :filter_type => "Epic" }))
-                  .select { |epic| epic.key =~ /SMGR-[0-9][0-9][0-9][0-9][0-9]/ } # TODO If key is under 5 digits, it's too old to refer.
-    @epics.concat(sub_epics)
+    @epics = JiraApiCaller.new.search(JiraApiCaller.build_query({ :project     => Team::Project,
+                                                                  :filter_type => "Epic" }))
 
     @epic_issues = JiraApiCaller.new.search(JiraApiCaller.build_query({ :project  => Team::Project,
                                                                         :epiclink => @epics.map { |epic| epic.key } }))
