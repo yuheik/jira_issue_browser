@@ -85,12 +85,7 @@ module Jira
     attr_reader :description
     attr_reader :versions
     attr_reader :labels
-    attr_reader :severity
-    attr_reader :milestone
     attr_reader :epic
-    attr_reader :epic_name      # seems not used
-    attr_reader :program_epic   # seems not used
-    attr_reader :pdm
     attr_reader :priority
 
     def initialize(json)
@@ -102,24 +97,21 @@ module Jira
       @subtask_keys       = get_subtask_keys(fields["subtasks"])
       @assignee           = fields["assignee"]["displayName"] if fields["assignee"] # "name" "emailAddress" are also available
       @type               = fields["issuetype"]["name"]
-      @story_points       = fields["customfield_10142"]
       @original_estimate  = fields["timeoriginalestimate"]
       @remaining_estimate = fields["timeestimate"]
       @time_spent         = fields["timespent"]
       @status             = fields["status"]["name"]
-      @sprints            = get_sprints(fields["customfield_10240"])
       @project            = fields["project"]["key"]
       @components         = fields["components"]
       @description        = fields["description"]
       @versions           = get_fixVersions(fields["fixVersions"])
       @labels             = fields["labels"]
-      @severity           = fields["customfield_10004"]["value"] if fields["customfield_10004"]
-      @milestone          = fields["customfield_14160"]["value"] if fields["customfield_14160"]
-      @epic               = fields["customfield_10940"]
-      @epic_name          = fields["customfield_10941"]
-      @program_epic       = fields["customfield_14463"]
-      @pdm                = fields["customfield_14163"]["name"]  if fields["customfield_14163"]
-      @priority           = fields["customfield_15470"]["value"] if fields["customfield_15470"]
+      @priority           = fields["priority"]["id"]
+
+      # TODO followings Depends on the Site
+      @story_points       = fields["customfield_10024"]
+      @sprints            = get_sprints(fields["customfield_10020"])
+      @epic               = fields["customfield_10014"]
     end
 
     def get_subtask_keys(json)
