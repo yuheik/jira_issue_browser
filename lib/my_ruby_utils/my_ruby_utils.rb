@@ -1,8 +1,8 @@
-# coding: utf-8
+
 module MyRubyUtils
 
   #
-  # Create CUI for choose item from contents_list
+  # Create CUI for choose item from contents_list.
   #
   # @param [Array] contents_list Items to choose from.
   # @param [Block] block Block(item, index) Prompt customization.
@@ -41,7 +41,7 @@ module MyRubyUtils
 
 
   #
-  # Convert second into hour
+  # Convert second into hour.
   #
   # @param [Integer] sec Value to convert.
   # @return [Float] Converted value.
@@ -53,7 +53,7 @@ module MyRubyUtils
 
 
   #
-  # Calculate percentage
+  # Calculate percentage.
   #
   # @param [Integer] a numerator
   # @param [Integer] b denominator
