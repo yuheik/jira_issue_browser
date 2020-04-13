@@ -1,5 +1,5 @@
 require_relative '../team_info'
-require_relative '../jira/jira_api_caller'
+require_relative '../lib/jira/jira_api_caller'
 require_relative './cui_utils'
 
 include CuiUtils
