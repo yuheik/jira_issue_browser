@@ -53,6 +53,19 @@ module MyRubyUtils
 
 
   #
+  # Calculate percentage
+  #
+  # @param [Integer] a numerator
+  # @param [Integer] b denominator
+  # @return [Float] Percentage
+  #
+  def percentage(a, b)
+    return nil if b == 0
+    return ((a.to_f / b).round(2) * 100).to_i
+  end
+
+
+  #
   # Dump standard output result into the file.
   #
   # @param [String] filename Path to the file.
