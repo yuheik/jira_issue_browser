@@ -7,11 +7,6 @@ class Analyzer
     @issues = issues
   end
 
-  def percentage(a, b)
-    return nil if b == 0
-    return ((a.to_f / b).round(2) * 100).to_i
-  end
-
   def sec_to_sp(sec)
     return (sec_to_hour(sec) / 6.0).round(1)
   end
