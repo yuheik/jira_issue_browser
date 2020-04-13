@@ -1,5 +1,5 @@
 require_relative './base_actions'
-require_relative '../my_utils'
+require_relative '../lib/my_ruby_utils/my_ruby_utils'
 
 class FeatureActions < BaseActions
   def self.init

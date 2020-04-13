@@ -1,12 +1,12 @@
 #! /usr/bin/ruby
 # coding: utf-8
 
-require_relative './my_utils'
+require_relative './lib/my_ruby_utils/my_ruby_utils'
 require_relative './action/sprint_actions'
 require_relative './action/feature_actions'
 require_relative './action/roadmap_actions'
 
-include MyUtils
+include MyRubyUtils
 
 
 # for debug
