@@ -18,8 +18,8 @@ class SprintActions < BaseActions
 
   def self.get_sprint_issues
     @params   = input_query_param()
-    query     = JiraApiCaller::build_query(@params)
-    @issues   = JiraApiCaller.new.search(query)
+    query     = JiraApiCaller.build_query(@params)
+    @issues   = JiraApiCaller.search(query)
     @analyzer = Analyzer.new(@issues)
   end
 
@@ -167,7 +167,7 @@ class SprintActions < BaseActions
   end
 
   def self.list_with_epics
-    epics = JiraApiCaller.new.search("key in (#{@issues.epic_keys.join(',')})")
+    epics = JiraApiCaller.search("key in (#{@issues.epic_keys.join(',')})")
     list_issues_group_by_epics(epics, @issues)
   end
 

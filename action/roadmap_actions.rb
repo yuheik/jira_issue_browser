@@ -5,7 +5,7 @@ class RoadmapActions < BaseActions
     if @issues.nil?
       @issues       = get_issues_linked_with_epic
       @sprint_names = @issues.map { |issue| issue.sprint ? issue.sprint.name : nil }.uniq.compact.sort
-      @epics        = JiraApiCaller.new.search("key in (#{@issues.epic_keys.join(', ')})")
+      @epics        = JiraApiCaller.search("key in (#{@issues.epic_keys.join(', ')})")
     end
 
     @show = { :stories => true }
@@ -13,7 +13,7 @@ class RoadmapActions < BaseActions
   end
 
   def self.get_issues_linked_with_epic
-    return JiraApiCaller.new.search("project = #{Team::Project} AND status not in (Done) AND \"Epic Link\" != EMPTY")
+    return JiraApiCaller.search("project = #{Team::Project} AND status not in (Done) AND \"Epic Link\" != EMPTY")
   end
 
   def self.list

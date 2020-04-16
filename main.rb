@@ -10,7 +10,7 @@ include MyRubyUtils
 
 
 # for debug
-# puts JiraApiCaller.new.get_issue("MYP-11") # sub-task
+# puts JiraApiCaller.get_issue("MYP-11") # sub-task
 
 # -- Sprint Actions ------------------------------------------------------------
 

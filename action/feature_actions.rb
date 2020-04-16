@@ -18,11 +18,11 @@ class FeatureActions < BaseActions
   end
 
   def self.get_epics_and_its_issues
-    @epics = JiraApiCaller.new.search(JiraApiCaller.build_query({ :project     => Team::Project,
-                                                                  :filter_type => "Epic" }))
+    @epics = JiraApiCaller.search(JiraApiCaller.build_query({ :project     => Team::Project,
+                                                              :filter_type => "Epic" }))
 
-    @epic_issues = JiraApiCaller.new.search(JiraApiCaller.build_query({ :project  => Team::Project,
-                                                                        :epiclink => @epics.map { |epic| epic.key } }))
+    @epic_issues = JiraApiCaller.search(JiraApiCaller.build_query({ :project  => Team::Project,
+                                                                    :epiclink => @epics.map { |epic| epic.key } }))
   end
 
   def self.filter_epics
