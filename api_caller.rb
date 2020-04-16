@@ -6,7 +6,7 @@ require 'uri'
 require 'benchmark'
 
 class ApiCaller
-  def call(url, id, password, silent = false)
+  def self.call(url, id, password, silent = false)
     puts "calling: #{url}" unless silent
 
     uri = URI(url)

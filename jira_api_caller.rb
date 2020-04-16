@@ -14,7 +14,7 @@ class JiraApiCaller < ApiCaller
   MAX_SEARCH_RESULTS  = 5
   # MAX_SEARCH_RESULTS  = 100   # for sequence
 
-  def call(url, silent = false)
+  def self.call(url, silent = false)
     body = super("#{JIRA_URL}/#{url}", Credential::UserName, Credential::Password, silent)
     # puts body # dump this to create raw json
     # abort
@@ -23,13 +23,13 @@ class JiraApiCaller < ApiCaller
     return json
   end
 
-  def get_issue(issue_id)
+  def self.get_issue(issue_id)
     json = call("issue/#{issue_id}")
 
     Jira::Issue.new(json)
   end
 
-  def search_with_range(query, index, max_num_of_results, silent = false)
+  def self.search_with_range(query, index, max_num_of_results, silent = false)
     url  = "search?jql=#{URI.escape(query)}"
     url += "&startAt=#{index}"
     url += "&maxResults=#{max_num_of_results}" # setting 'maxResults' will fasten search
@@ -38,12 +38,12 @@ class JiraApiCaller < ApiCaller
     return json
   end
 
-  def to_issues(json)
+  def self.to_issues(json)
     return json["issues"].map { |issue_json| Jira::Issue.new(issue_json) }
   end
 
   # main purpose is to know whole size
-  def initial_search_call(query, size)
+  def self.initial_search_call(query, size)
     json = search_with_range(query, 0, size, false)
     issues = to_issues(json)
     total = json["total"]
@@ -51,7 +51,7 @@ class JiraApiCaller < ApiCaller
     return issues, total
   end
 
-  def search_parallel_call(query, start_index, total)
+  def self.search_parallel_call(query, start_index, total)
     index   = start_index
     threads = Array.new
     results = Array.new
@@ -75,12 +75,12 @@ class JiraApiCaller < ApiCaller
     return results.flatten!
   end
 
-  def search(query)
+  def self.search(query)
     return search_in_parallel(query)
     # return search_in_sequence(query) # Leave this for debug.
   end
 
-  def search_in_parallel(query)
+  def self.search_in_parallel(query)
     puts "search with query: #{query}"
     puts ""
 
@@ -104,7 +104,7 @@ class JiraApiCaller < ApiCaller
     return issues
   end
 
-  def search_in_sequence(query)
+  def self.search_in_sequence(query)
     puts "search with query: #{query}"
     puts ""
 
