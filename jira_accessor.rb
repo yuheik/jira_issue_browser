@@ -5,7 +5,7 @@ require 'json'
 require_relative './my_credential'
 
 class JiraAccessor
-  API_URL = "#{Site}/rest/api/2"
+  API_URL = "#{Credential::Site}/rest/api/2"
 
   def self.compose_payload(story_point)
     param = Hash.new
@@ -24,8 +24,8 @@ class JiraAccessor
     begin
       response = RestClient::Request.new(:method     => :PUT,
                                          :url        => "#{API_URL}/issue/#{key}",
-                                         :user       => UserName,
-                                         :password   => Password,
+                                         :user       => Credential::UserName,
+                                         :password   => Credential::Password,
                                          :proxy      => nil,
                                          :verify_ssl => false,
                                          :payload    => compose_payload(story_point),
