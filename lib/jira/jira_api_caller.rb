@@ -3,19 +3,19 @@
 require 'json'
 require 'benchmark'
 require_relative './api_caller'
-require_relative './access_info'
+require_relative './my_credential.rb'
 require_relative './jira'
 
 SeachType = :parallel           # or :sequence
 
 class JiraApiCaller < ApiCaller
-  JIRA_URL = "#{Team::SITE}/rest/api/2"
+  JIRA_URL = "#{Credential::Site}/rest/api/2"
   INITIAL_SEARCH_SIZE = 1
   MAX_SEARCH_RESULTS  = 5
   # MAX_SEARCH_RESULTS  = 100   # for sequence
 
   def call(url, silent = false)
-    body = super("#{JIRA_URL}/#{url}", AccessInfo::Email, AccessInfo::Pass, silent)
+    body = super("#{JIRA_URL}/#{url}", Credential::UserName, Credential::Password, silent)
     # puts body # dump this to create raw json
     # abort
 
