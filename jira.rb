@@ -1,8 +1,5 @@
 # coding: utf-8
 
-require './lib/my_ruby_utils/my_ruby_utils'
-include MyRubyUtils
-
 module Jira
   # TODO IssueType definition depends on the Site
   Types = [
@@ -113,6 +110,10 @@ module Jira
       @story_points       = fields["customfield_10024"]
       @sprints            = get_sprints(fields["customfield_10020"])
       @epic               = fields["customfield_10014"]
+    end
+
+    def inspect
+      "[#{@key}] #{@title} - #{@epic} (#{@story_points})"
     end
 
     def get_subtask_keys(json)
