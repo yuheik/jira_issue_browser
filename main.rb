@@ -1,4 +1,4 @@
-#! /usr/bin/ruby
+#! /usr/bin/env ruby
 # coding: utf-8
 
 require_relative './lib/my_ruby_utils/my_ruby_utils'
