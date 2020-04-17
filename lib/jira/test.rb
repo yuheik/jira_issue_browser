@@ -2,6 +2,7 @@
 
 require './jira_accessor'
 require './jira_api_caller'
+require './search_query_builder'
 
 puts "----------------------------------------"
 sp_to_set = rand(1..30)
@@ -14,6 +15,7 @@ p JiraApiCaller.get_issue("MYP-62")
 
 puts "----------------------------------------"
 puts "search"
-JiraApiCaller.search(JiraApiCaller.build_query({ project: "MYP" })).sort_by!(:key).each do |issue|
+query = JiraApi::SearchQueryBuilder.build_query({ project: "MYP" })
+JiraApiCaller.search(query).sort_by!(:key).each do |issue|
   p issue
 end
