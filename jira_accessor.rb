@@ -2,10 +2,10 @@
 
 require 'json'
 require_relative './api_caller_restclient'
-require_relative './my_credential'
+require_relative './credentials'
 
 class JiraAccessor < ApiCallerRestClient
-  JIRA_URL = "#{Credential::Site}/rest/api/2"
+  JIRA_URL = "#{Credentials::Site}/rest/api/2"
 
   def self.compose_payload(story_point)
     param = Hash.new
@@ -22,8 +22,8 @@ class JiraAccessor < ApiCallerRestClient
   # Add 'Story Points' field there.
   def self.update_issue(key, story_point)
     call("#{JIRA_URL}/issue/#{key}",
-         Credential::UserName,
-         Credential::Password,
+         Credentials::UserName,
+         Credentials::Password,
          :PUT,
          compose_payload(story_point))
   end

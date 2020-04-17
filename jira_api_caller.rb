@@ -2,20 +2,20 @@
 
 require 'json'
 require 'benchmark'
-require_relative './api_caller'
-require_relative './my_credential.rb'
+require_relative './api_caller_restclient'
+require_relative './credentials.rb'
 require_relative './jira'
 
 SeachType = :parallel           # or :sequence
 
-class JiraApiCaller < ApiCaller
-  JIRA_URL = "#{Credential::Site}/rest/api/2"
+class JiraApiCaller < ApiCallerRestClient
+  JIRA_URL = "#{Credentials::Site}/rest/api/2"
   INITIAL_SEARCH_SIZE = 1
   MAX_SEARCH_RESULTS  = 5
   # MAX_SEARCH_RESULTS  = 100   # for sequence
 
   def self.call(url, silent = false)
-    body = super("#{JIRA_URL}/#{url}", Credential::UserName, Credential::Password, silent)
+    body = super("#{JIRA_URL}/#{url}", Credentials::UserName, Credentials::Password, :GET, nil)
     # puts body # dump this to create raw json
     # abort
 
@@ -130,35 +130,5 @@ class JiraApiCaller < ApiCaller
     puts ""
 
     return issues
-  end
-
-  #
-  # @param params[:project]      Project name. Mandatory.
-  # @param params[:sprint]       'Sprint name' or 'active' or nil
-  # @param params[:filter_type]  issue type which will be filtered or nil
-  # @param params[:exclude_type] issue type which will be excluded or nil
-  # @param params[:epiclink]     issues which epic link would be
-  #
-  def self.build_query(params)
-    abort "params is not Hash" if params.class != Hash
-    abort "project is missing" if params[:project].nil?
-
-    jql = "project = #{params[:project]} "
-
-    if params[:sprint]
-      if params[:sprint] == 'active'
-        jql += "AND sprint in openSprints() "
-      else
-        jql += "AND sprint = \"#{params[:sprint]}\" "
-      end
-    end
-
-    jql += "AND type = \"#{params[:filter_type]}\" "                 if params[:filter_type]
-    jql += "AND type != \"#{params[:exclude_type]}\" "               if params[:exclude_type]
-    jql += "AND assignee = \"#{params[:assignee]}\" "                if params[:assignee]
-    jql += "AND \"Epic Link\" in (#{params[:epiclink].join(', ')}) " if params[:epiclink]
-    jql += "ORDER BY Rank "
-
-    return jql
   end
 end

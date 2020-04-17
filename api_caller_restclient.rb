@@ -1,25 +1,37 @@
 require 'rest-client'
 require 'json'
+require 'benchmark'
 
 class ApiCallerRestClient
+  SHOW_BENCHMARK = false
+
   def self.call(url, id, password, method, payload)
-    begin
-      response = RestClient::Request.new(:method     => method,
-                                         :url        => url,
-                                         :user       => id,
-                                         :password   => password,
-                                         :proxy      => nil,
-                                         :verify_ssl => false,
-                                         :payload    => payload,
-                                         :headers    => { :content_type => "application/json;charset=UTF-8" }
-                                        ).execute
-    rescue RestClient::ExceptionWithResponse => e
-      puts "Error: (#{e.message} with #{e.response})"
-      puts "Failed: #{e.backtrace}"
-      # puts e
+    response = nil
+    benchmark_result = Benchmark.realtime do
+      begin
+        response = RestClient::Request.new(:method     => method,
+                                           :url        => url,
+                                           :user       => id,
+                                           :password   => password,
+                                           :proxy      => nil,
+                                           :verify_ssl => false,
+                                           :payload    => payload,
+                                           :headers    => {
+                                             :content_type => "application/json;charset=UTF-8"
+                                           }
+                                          ).execute
+      rescue RestClient::ExceptionWithResponse => e
+        puts "Error: (#{e.message} with #{e.response})"
+        puts "Failed: #{e.backtrace}"
+        abort
+      end
     end
 
+    puts "call done (#{benchmark_result.floor}s)" if SHOW_BENCHMARK
+    puts ""                                       if SHOW_BENCHMARK
+
     # dump(response)
+    return response.body
   end
 
   def self.dump(response)
