@@ -1,8 +1,10 @@
 require_relative '../team_info'
 require_relative '../lib/jira/jira_api_caller'
+require_relative '../lib/jira/search_query_builder'
 require_relative './cui_utils'
 
 include CuiUtils
+include JiraApi
 
 class BaseActions
   CANCEL = "CANCEL"

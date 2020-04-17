@@ -18,7 +18,7 @@ class SprintActions < BaseActions
 
   def self.get_sprint_issues
     @params   = input_query_param()
-    query     = JiraApiCaller.build_query(@params)
+    query     = SearchQueryBuilder.build_query(@params)
     @issues   = JiraApiCaller.search(query)
     @analyzer = Analyzer.new(@issues)
   end
